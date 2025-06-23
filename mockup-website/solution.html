@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InsureCheck - Our AI-Powered Solution</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                line-height: 1.6;
+                color: #6b7280;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* Header */
+            header {
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                margin-bottom: 3rem;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #6b7280;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #1e3a8a;
+            }
+
+            .cta-button {
+                background: #1e3a8a;
+                color: #ffffff;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .cta-button:hover {
+                background: #1e40af;
+            }
+
+            /* Hero Section */
+            .hero-section {
+                text-align: center;
+                padding: 3rem 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(30, 58, 138, 0.1) 0%,
+                    rgba(16, 185, 129, 0.1) 100%
+                );
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .hero-section p {
+                font-size: 1.25rem;
+                color: #6b7280;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #1e3a8a;
+                margin-bottom: 2rem;
+            }
+
+            .grid {
+                display: grid;
+                gap: 2rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .card {
+                background: #ffffff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card h3 {
+                color: #1e3a8a;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .highlight-card {
+                background: linear-gradient(135deg, #dbeafe 0%, #d1fae5 100%);
+                border-left: 4px solid #1e3a8a;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .highlight-card h3 {
+                color: #1e3a8a;
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .highlight-card p {
+                font-size: 1.125rem;
+                color: #374151;
+            }
+
+            .process-section {
+                background: #f9fafb;
+                padding: 4rem 0;
+            }
+
+            .process-step {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+                margin-bottom: 3rem;
+                padding: 2rem;
+                background: white;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            }
+
+            .process-step:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+
+            .step-number {
+                background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+                color: white;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2rem;
+                font-weight: bold;
+                flex-shrink: 0;
+            }
+
+            .step-content h4 {
+                color: #1e3a8a;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+                margin: 3rem 0;
+            }
+
+            .feature-card {
+                background: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+
+            .feature-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                display: block;
+            }
+
+            .feature-card h4 {
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+                font-size: 1.25rem;
+            }
+
+            .stat-card {
+                text-align: center;
+                background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+                color: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+                font-weight: 800;
+                margin-bottom: 0.5rem;
+            }
+
+            .benefits-section {
+                background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+                color: white;
+                padding: 4rem 0;
+            }
+
+            .benefits-section h2 {
+                color: white;
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .benefit-item {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                margin-bottom: 1rem;
+                backdrop-filter: blur(10px);
+            }
+
+            .benefit-item h4 {
+                color: #22d3ee;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .hero-section h1 {
+                    font-size: 2rem;
+                }
+
+                .section h2 {
+                    font-size: 2rem;
+                }
+
+                .process-step {
+                    flex-direction: column !important;
+                    text-align: center;
+                }
+
+                .process-step:nth-child(even) {
+                    flex-direction: column !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="logo">insurecheck</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="problem.html">Problem</a></li>
+                    <li>
+                        <a href="solution.html" style="color: #1e3a8a"
+                            >Solution</a
+                        >
+                    </li>
+                    <li><a href="data.html">Data Insights</a></li>
+                    <li><a href="model.html">Our Model</a></li>
+                    <li><a href="check.html">Check Risk</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="check.html" class="cta-button">Get A Quote</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>Our AI-Powered Solution</h1>
+                <p>
+                    InsureCheck leverages advanced machine learning algorithms
+                    to predict which customers are most likely to be interested
+                    in vehicle insurance, enabling targeted awareness campaigns
+                    and personalized outreach strategies.
+                </p>
+            </div>
+        </section>
+
+        <!-- Solution Overview -->
+        <section class="section">
+            <div class="container">
+                <div class="highlight-card">
+                    <h3>🤖 Predictive Insurance Interest Platform</h3>
+                    <p>
+                        Our XGBoost-powered platform transforms the insurance
+                        industry by identifying high-probability prospects with
+                        91% accuracy, reducing acquisition costs by 40% while
+                        maximizing revenue opportunities and promoting financial
+                        inclusion in underserved communities.
+                    </p>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="stat-card">
+                        <div class="stat-number">91%</div>
+                        <div>Recall Rate</div>
+                        <small>Captures interested customers</small>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">86%</div>
+                        <div>AUC Score</div>
+                        <small>Model performance</small>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">40%</div>
+                        <div>Cost Reduction</div>
+                        <small>Lower acquisition costs</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="process-section">
+            <div class="container">
+                <h2
+                    style="
+                        text-align: center;
+                        margin-bottom: 3rem;
+                        color: #1e3a8a;
+                    "
+                >
+                    How Our Platform Works
+                </h2>
+
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Data Collection & Analysis</h4>
+                        <p>
+                            We analyze comprehensive customer profiles including
+                            demographics, vehicle characteristics, driving
+                            history, and prior insurance behavior. Our system
+                            processes over 381,000 customer records with 12 key
+                            features to build accurate predictive models.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>AI-Powered Prediction</h4>
+                        <p>
+                            Our XGBoost machine learning model processes
+                            multiple features to predict insurance interest with
+                            industry-leading accuracy. The algorithm identifies
+                            patterns invisible to traditional methods, achieving
+                            86% AUC score and 91% recall rate.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Targeted Campaign Generation</h4>
+                        <p>
+                            Insurance providers receive prioritized customer
+                            lists, personalized messaging strategies, and
+                            optimal channel recommendations. Our platform
+                            maximizes conversion rates while minimizing
+                            marketing spend through precision targeting.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Continuous Learning & Optimization</h4>
+                        <p>
+                            The system continuously improves through feedback
+                            loops, adapting to changing market conditions and
+                            customer preferences. Real-time performance
+                            monitoring ensures sustained accuracy and
+                            effectiveness.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features -->
+        <section class="section">
+            <div class="container">
+                <h2 style="text-align: center">Platform Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🎯</span>
+                        <h4>Smart Targeting</h4>
+                        <p>
+                            Identify high-probability prospects with 91%
+                            accuracy, focusing resources on customers most
+                            likely to purchase insurance and maximizing ROI.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">📊</span>
+                        <h4>Data-Driven Insights</h4>
+                        <p>
+                            Comprehensive analytics on customer behavior,
+                            regional trends, and optimal sales channels for
+                            maximum campaign effectiveness.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🔄</span>
+                        <h4>Continuous Learning</h4>
+                        <p>
+                            Models continuously improve through feedback loops,
+                            adapting to changing market conditions and evolving
+                            customer preferences.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🌍</span>
+                        <h4>Community Impact</h4>
+                        <p>
+                            Beyond business profits, our platform promotes
+                            financial inclusion and community resilience through
+                            responsible innovation.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h4>Real-Time Processing</h4>
+                        <p>
+                            Instant risk assessments and customer scoring enable
+                            immediate action on high-value prospects and
+                            time-sensitive opportunities.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🛡️</span>
+                        <h4>Risk Assessment</h4>
+                        <p>
+                            Advanced algorithms identify customers with highest
+                            insurance needs based on damage history, age
+                            demographics, and regional patterns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Benefits -->
+        <section class="benefits-section">
+            <div class="container">
+                <h2>Business Benefits</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="benefit-item">
+                            <h4>💰 Revenue Optimization</h4>
+                            <p>
+                                Increase conversion rates by 3x through precise
+                                customer targeting and personalized approach
+                                strategies.
+                            </p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>📉 Cost Reduction</h4>
+                            <p>
+                                Reduce customer acquisition costs by 40% by
+                                focusing marketing efforts on high-probability
+                                prospects.
+                            </p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>🎯 Precision Marketing</h4>
+                            <p>
+                                Optimize marketing campaign effectiveness with
+                                data-driven customer segmentation and channel
+                                selection.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="benefit-item">
+                            <h4>😊 Enhanced Satisfaction</h4>
+                            <p>
+                                Improve customer satisfaction through
+                                personalized insurance solutions tailored to
+                                individual needs.
+                            </p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>📈 Scalable Growth</h4>
+                            <p>
+                                Enable sustainable business growth through
+                                systematic, data-driven customer acquisition
+                                strategies.
+                            </p>
+                        </div>
+                        <div class="benefit-item">
+                            <h4>🔍 Competitive Advantage</h4>
+                            <p>
+                                Gain market edge through advanced AI
+                                capabilities and deep customer insight
+                                analytics.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Impact -->
+        <section class="section">
+            <div class="container">
+                <h2 style="text-align: center">
+                    Social Impact & Responsible Innovation
+                </h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3>🌟 Financial Inclusion</h3>
+                        <p>
+                            Our platform specifically targets underserved
+                            communities and regions with low insurance
+                            awareness, bridging the gap between those who need
+                            protection and available solutions. We've identified
+                            regions with as low as 4% insurance interest,
+                            creating opportunities for targeted intervention.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🛡️ Community Resilience</h3>
+                        <p>
+                            By helping more people access appropriate insurance
+                            coverage, we strengthen entire communities against
+                            economic shocks. Our solution directly supports UN
+                            Sustainable Development Goals 1, 8, and 9, promoting
+                            poverty reduction and economic stability.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>📚 Education & Awareness</h3>
+                        <p>
+                            Beyond targeting, our platform helps insurance
+                            providers create educational campaigns that raise
+                            awareness about the importance of vehicle insurance,
+                            especially among younger demographics (20-30 years)
+                            who show lower interest rates.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>⚖️ Ethical AI</h3>
+                        <p>
+                            Our AI models are designed with fairness and
+                            transparency in mind, ensuring that predictive
+                            algorithms don't perpetuate bias but instead promote
+                            equitable access to financial protection services
+                            across all demographic groups.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section
+            class="section"
+            style="
+                background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%);
+                text-align: center;
+            "
+        >
+            <div class="container">
+                <h2 style="color: #1e3a8a; margin-bottom: 1rem">
+                    Ready to Transform Your Insurance Business?
+                </h2>
+                <p
+                    style="
+                        font-size: 1.25rem;
+                        margin-bottom: 2rem;
+                        color: #6b7280;
+                    "
+                >
+                    Join the insurance revolution and start identifying your
+                    most valuable prospects today.
+                </p>
+                <div
+                    style="
+                        display: flex;
+                        gap: 2rem;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                    "
+                >
+                    <a
+                        href="check.html"
+                        style="
+                            background: #1e3a8a;
+                            color: white;
+                            padding: 1rem 2rem;
+                            border-radius: 0.5rem;
+                            text-decoration: none;
+                            font-weight: 600;
+                        "
+                        >Try Our Platform</a
+                    >
+                    <a
+                        href="contact.html"
+                        style="
+                            background: transparent;
+                            color: #1e3a8a;
+                            padding: 1rem 2rem;
+                            border: 2px solid #1e3a8a;
+                            border-radius: 0.5rem;
+                            text-decoration: none;
+                            font-weight: 600;
+                        "
+                        >Contact Us</a
+                    >
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

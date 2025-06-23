@@ -1,0 +1,21 @@
+{
+    "model_name": "XGBoost",
+    "auc_score": 0.8559208885772336,
+    "precision": 0.29039563531551316,
+    "recall": 0.9059087989723827,
+    "f1_score": 0.4398077172924516,
+    "training_date": "2025-06-18 23:27:52",
+    "dataset_size": 381109,
+    "features_used": [
+        "Age",
+        "Driving_License",
+        "Region_Code",
+        "Previously_Insured",
+        "Vehicle_Age_Numeric",
+        "Annual_Premium",
+        "Policy_Sales_Channel",
+        "Vintage",
+        "Gender_Encoded",
+        "Vehicle_Damage_Encoded"
+    ]
+}

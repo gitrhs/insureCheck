@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InsureCheck - Check Your Insurance Risk</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                line-height: 1.6;
+                color: #6b7280;
+                background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%);
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* Header */
+            header {
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                margin-bottom: 2rem;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #6b7280;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #1e3a8a;
+            }
+
+            .back-btn {
+                background: #10b981;
+                color: #ffffff;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .back-btn:hover {
+                background: #059669;
+            }
+
+            /* Main Content */
+            .main-content {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+                align-items: start;
+                padding: 2rem 0;
+            }
+
+            .form-section {
+                background: white;
+                padding: 2rem;
+                border-radius: 1rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            }
+
+            .form-section h1 {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .form-section p {
+                color: #6b7280;
+                margin-bottom: 2rem;
+                font-size: 1.1rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                color: #374151;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 0.75rem;
+                border: 2px solid #e5e7eb;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                transition: border-color 0.3s;
+            }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                outline: none;
+                border-color: #1e3a8a;
+            }
+
+            .checkbox-group {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .checkbox-group input {
+                width: auto;
+            }
+
+            .submit-btn {
+                width: 100%;
+                background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+                color: white;
+                padding: 1rem 2rem;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+
+            .submit-btn:hover {
+                transform: translateY(-2px);
+            }
+
+            .submit-btn:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            /* Loading spinner */
+            .loading {
+                display: none;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .spinner {
+                border: 4px solid #f3f4f6;
+                border-top: 4px solid #1e3a8a;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 1rem;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Error message */
+            .error-message {
+                display: none;
+                background: #fee2e2;
+                border: 1px solid #fecaca;
+                color: #dc2626;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                margin-top: 1rem;
+            }
+
+            /* Result Section */
+            .result-section {
+                background: white;
+                padding: 2rem;
+                border-radius: 1rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+
+            .result-hidden {
+                display: none;
+            }
+
+            .risk-meter {
+                width: 200px;
+                height: 200px;
+                margin: 2rem auto;
+                border-radius: 50%;
+                background: conic-gradient(
+                    from 0deg,
+                    #ef4444 0%,
+                    #f59e0b 30%,
+                    #10b981 60%,
+                    #10b981 100%
+                );
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+
+            .risk-meter::before {
+                content: "";
+                width: 150px;
+                height: 150px;
+                background: white;
+                border-radius: 50%;
+                position: absolute;
+            }
+
+            .risk-percentage {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+                z-index: 1;
+            }
+
+            .risk-label {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin: 1rem 0;
+            }
+
+            .risk-high {
+                color: #ef4444;
+            }
+            .risk-medium {
+                color: #f59e0b;
+            }
+            .risk-low {
+                color: #10b981;
+            }
+
+            .recommendation {
+                background: #f0f9ff;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                border-left: 4px solid #1e3a8a;
+                margin-top: 2rem;
+                text-align: left;
+            }
+
+            .info-section {
+                background: white;
+                padding: 2rem;
+                border-radius: 1rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                margin-top: 2rem;
+            }
+
+            .info-section h2 {
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .feature-list {
+                list-style: none;
+                padding: 0;
+            }
+
+            .feature-list li {
+                padding: 0.5rem 0;
+                border-bottom: 1px solid #e5e7eb;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .feature-list li:last-child {
+                border-bottom: none;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .main-content {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+
+                .form-section h1 {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="logo">insurecheck</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="problem.html">Problem</a></li>
+                    <li><a href="solution.html">Solution</a></li>
+                    <li><a href="data.html">Data Insights</a></li>
+                    <li><a href="model.html">Our Model</a></li>
+                    <li>
+                        <a href="check.html" style="color: #1e3a8a"
+                            >Check Risk</a
+                        >
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="index.html" class="back-btn">← Back to Home</a>
+            </nav>
+        </header>
+
+        <div class="container">
+            <div class="main-content">
+                <!-- Form Section -->
+                <div class="form-section">
+                    <h1>Check Your Insurance Risk</h1>
+                    <p>
+                        Answer a few questions and our AI model will predict
+                        your likelihood of needing vehicle insurance based on
+                        data from over 381,000 customers.
+                    </p>
+
+                    <form id="riskForm">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input
+                                type="number"
+                                id="age"
+                                name="age"
+                                min="18"
+                                max="100"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="drivingLicense"
+                                >Do you have a driving license?</label
+                            >
+                            <select
+                                id="drivingLicense"
+                                name="drivingLicense"
+                                required
+                            >
+                                <option value="">Select Option</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="region">Region Code</label>
+                            <input
+                                type="number"
+                                id="region"
+                                name="region"
+                                placeholder="Enter your region code (1-52)"
+                                min="1"
+                                max="52"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="previousInsurance"
+                                >Previously Insured?</label
+                            >
+                            <select
+                                id="previousInsurance"
+                                name="previousInsurance"
+                                required
+                            >
+                                <option value="">Select Option</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vehicleAge">Vehicle Age</label>
+                            <select id="vehicleAge" name="vehicleAge" required>
+                                <option value="">Select Vehicle Age</option>
+                                <option value="< 1 Year">
+                                    Less than 1 Year
+                                </option>
+                                <option value="1-2 Year">1-2 Years</option>
+                                <option value="> 2 Years">
+                                    More than 2 Years
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vehicleDamage"
+                                >Has your vehicle been damaged before?</label
+                            >
+                            <select
+                                id="vehicleDamage"
+                                name="vehicleDamage"
+                                required
+                            >
+                                <option value="">Select Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="annualPremium"
+                                >Annual Premium Budget (RM)</label
+                            >
+                            <input
+                                type="number"
+                                id="annualPremium"
+                                name="annualPremium"
+                                placeholder="e.g., 25000"
+                                min="1000"
+                                max="100000"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="salesChannel"
+                                >Preferred Sales Channel</label
+                            >
+                            <select
+                                id="salesChannel"
+                                name="salesChannel"
+                                required
+                            >
+                                <option value="">Select Channel</option>
+                                <option value="152">Online</option>
+                                <option value="26">Phone</option>
+                                <option value="124">Agent</option>
+                                <option value="160">Direct Mail</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vintage"
+                                >How long have you been a customer?
+                                (days)</label
+                            >
+                            <input
+                                type="number"
+                                id="vintage"
+                                name="vintage"
+                                placeholder="e.g., 180"
+                                min="1"
+                                max="500"
+                                required
+                            />
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            🔍 Check My Risk Level
+                        </button>
+                    </form>
+
+                    <!-- Loading indicator -->
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Analyzing your profile with our AI model...</p>
+                    </div>
+
+                    <!-- Error message -->
+                    <div class="error-message" id="errorMessage">
+                        <p id="errorText"></p>
+                    </div>
+                </div>
+
+                <!-- Result Section -->
+                <div class="result-section" id="resultSection">
+                    <div id="initialInfo">
+                        <h2 style="color: #1e3a8a; margin-bottom: 1rem">
+                            AI-Powered Risk Assessment
+                        </h2>
+                        <p>
+                            Our machine learning model analyzes your profile
+                            using the same algorithm that achieved:
+                        </p>
+                        <div
+                            style="
+                                display: grid;
+                                grid-template-columns: repeat(2, 1fr);
+                                gap: 1rem;
+                                margin: 2rem 0;
+                            "
+                        >
+                            <div
+                                style="
+                                    background: #f0f9ff;
+                                    padding: 1rem;
+                                    border-radius: 0.5rem;
+                                    text-align: center;
+                                "
+                            >
+                                <div
+                                    style="
+                                        font-size: 2rem;
+                                        font-weight: bold;
+                                        color: #1e3a8a;
+                                    "
+                                >
+                                    91%
+                                </div>
+                                <div style="font-size: 0.9rem; color: #6b7280">
+                                    Recall Rate
+                                </div>
+                            </div>
+                            <div
+                                style="
+                                    background: #ecfdf5;
+                                    padding: 1rem;
+                                    border-radius: 0.5rem;
+                                    text-align: center;
+                                "
+                            >
+                                <div
+                                    style="
+                                        font-size: 2rem;
+                                        font-weight: bold;
+                                        color: #10b981;
+                                    "
+                                >
+                                    86%
+                                </div>
+                                <div style="font-size: 0.9rem; color: #6b7280">
+                                    AUC Score
+                                </div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #6b7280">
+                            Fill out the form to get your personalized insurance
+                            risk assessment.
+                        </p>
+                    </div>
+
+                    <div id="riskResult" class="result-hidden">
+                        <h2 style="color: #1e3a8a; margin-bottom: 1rem">
+                            Your Risk Assessment
+                        </h2>
+                        <div class="risk-meter">
+                            <div class="risk-percentage" id="riskPercentage">
+                                --
+                            </div>
+                        </div>
+                        <div class="risk-label" id="riskLabel">
+                            Calculating...
+                        </div>
+                        <div class="recommendation" id="recommendation">
+                            <h3 style="color: #1e3a8a; margin-bottom: 0.5rem">
+                                Recommendation
+                            </h3>
+                            <p id="recommendationText">Loading...</p>
+                        </div>
+                        <button
+                            class="submit-btn"
+                            style="margin-top: 1rem"
+                            onclick="location.href='contact.html'"
+                        >
+                            Get Insurance Quote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info Section -->
+            <div class="info-section">
+                <h2>How Our AI Model Works</h2>
+                <p>
+                    Our machine learning model uses XGBoost algorithm trained on
+                    381,109 customer records to predict insurance interest. Key
+                    factors include:
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        ✅ <strong>Vehicle Damage History:</strong> Most
+                        significant predictor (11x higher interest if damaged)
+                    </li>
+                    <li>
+                        ✅ <strong>Age Demographics:</strong> Peak interest in
+                        31-50 age group (>30% interest rate)
+                    </li>
+                    <li>
+                        ✅ <strong>Regional Patterns:</strong> Location-based
+                        risk assessment
+                    </li>
+                    <li>
+                        ✅ <strong>Financial Profile:</strong> Premium budget
+                        and payment history
+                    </li>
+                    <li>
+                        ✅ <strong>Vehicle Characteristics:</strong> Age and
+                        condition of vehicle
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            // Configuration
+            const API_BASE_URL = "http://localhost:5410";
+
+            // DOM elements
+            const form = document.getElementById("riskForm");
+            const submitBtn = document.getElementById("submitBtn");
+            const loading = document.getElementById("loading");
+            const errorMessage = document.getElementById("errorMessage");
+            const errorText = document.getElementById("errorText");
+            const initialInfo = document.getElementById("initialInfo");
+            const riskResult = document.getElementById("riskResult");
+            const riskPercentage = document.getElementById("riskPercentage");
+            const riskLabel = document.getElementById("riskLabel");
+            const recommendationText =
+                document.getElementById("recommendationText");
+
+            // Utility functions
+            function showLoading() {
+                loading.style.display = "block";
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Analyzing...";
+                hideError();
+            }
+
+            function hideLoading() {
+                loading.style.display = "none";
+                submitBtn.disabled = false;
+                submitBtn.textContent = "🔍 Check My Risk Level";
+            }
+
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.style.display = "block";
+            }
+
+            function hideError() {
+                errorMessage.style.display = "none";
+            }
+
+            function showResult(result) {
+                // Hide initial info and show result
+                initialInfo.style.display = "none";
+                riskResult.classList.remove("result-hidden");
+
+                // Update risk percentage
+                riskPercentage.textContent = result.risk_percentage + "%";
+
+                // Update risk label with appropriate class
+                riskLabel.textContent = result.risk_level;
+                riskLabel.className = "risk-label " + result.risk_class;
+
+                // Update recommendation
+                recommendationText.textContent = result.recommendation;
+
+                // Smooth scroll to result
+                document.getElementById("resultSection").scrollIntoView({
+                    behavior: "smooth",
+                });
+            }
+
+            // API functions
+            async function checkServerHealth() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/health`);
+                    return response.ok;
+                } catch (error) {
+                    console.error("Server health check failed:", error);
+                    return false;
+                }
+            }
+
+            async function predictInsurance(formData) {
+                try {
+                    // Prepare data for API
+                    const data = {
+                        Age: parseInt(formData.get("age")),
+                        Gender: formData.get("gender"),
+                        Driving_License: parseInt(
+                            formData.get("drivingLicense")
+                        ),
+                        Region_Code: parseInt(formData.get("region")),
+                        Previously_Insured: parseInt(
+                            formData.get("previousInsurance")
+                        ),
+                        Vehicle_Age: formData.get("vehicleAge"),
+                        Vehicle_Damage: formData.get("vehicleDamage"),
+                        Annual_Premium: parseFloat(
+                            formData.get("annualPremium")
+                        ),
+                        Policy_Sales_Channel: parseInt(
+                            formData.get("salesChannel")
+                        ),
+                        Vintage: parseInt(formData.get("vintage")),
+                    };
+
+                    console.log("Sending data to API:", data);
+
+                    const response = await fetch(`${API_BASE_URL}/predict`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(
+                            errorData.error ||
+                                `HTTP error! status: ${response.status}`
+                        );
+                    }
+
+                    const result = await response.json();
+
+                    if (!result.success) {
+                        throw new Error(result.error || "Prediction failed");
+                    }
+
+                    return result;
+                } catch (error) {
+                    console.error("API request failed:", error);
+                    throw error;
+                }
+            }
+
+            // Fallback prediction function (when server is not available)
+            function fallbackPrediction(formData) {
+                console.log("Using fallback prediction method");
+
+                const data = {
+                    Age: parseInt(formData.get("age")),
+                    Gender: formData.get("gender"),
+                    Vehicle_Damage: formData.get("vehicleDamage"),
+                    Previously_Insured: parseInt(
+                        formData.get("previousInsurance")
+                    ),
+                    Vehicle_Age: formData.get("vehicleAge"),
+                    Driving_License: parseInt(formData.get("drivingLicense")),
+                };
+
+                // Simple risk calculation based on your original logic
+                let riskScore = 0;
+
+                // Age factor (31-50 highest risk)
+                const age = data.Age;
+                if (age >= 31 && age <= 50) {
+                    riskScore += 30;
+                } else if (age >= 25 && age <= 60) {
+                    riskScore += 20;
+                } else {
+                    riskScore += 10;
+                }
+
+                // Vehicle damage (strongest predictor)
+                if (data.Vehicle_Damage === "Yes") {
+                    riskScore += 40;
+                } else {
+                    riskScore += 5;
+                }
+
+                // Previous insurance
+                if (data.Previously_Insured === 0) {
+                    riskScore += 20;
+                } else {
+                    riskScore += 5;
+                }
+
+                // Vehicle age
+                if (data.Vehicle_Age === "> 2 Years") {
+                    riskScore += 15;
+                } else if (data.Vehicle_Age === "1-2 Year") {
+                    riskScore += 10;
+                } else {
+                    riskScore += 5;
+                }
+
+                // Gender (slight difference based on research)
+                if (data.Gender === "Male") {
+                    riskScore += 8;
+                } else {
+                    riskScore += 6;
+                }
+
+                // Driving license
+                if (data.Driving_License === 1) {
+                    riskScore += 5;
+                }
+
+                // Normalize to percentage (max possible score ~120)
+                const riskPercentageValue = Math.min(
+                    Math.round(riskScore * 0.8),
+                    95
+                );
+
+                let riskLevel, riskClass, recommendation;
+                if (riskPercentageValue >= 70) {
+                    riskLevel = "High Risk";
+                    riskClass = "risk-high";
+                    recommendation =
+                        "We strongly recommend getting comprehensive vehicle insurance. Your profile indicates high likelihood of needing coverage. Our insurance partners can provide competitive quotes tailored to your needs.";
+                } else if (riskPercentageValue >= 40) {
+                    riskLevel = "Medium Risk";
+                    riskClass = "risk-medium";
+                    recommendation =
+                        "Consider getting vehicle insurance for peace of mind. Your profile shows moderate risk factors. We can help you find affordable coverage options that match your budget.";
+                } else {
+                    riskLevel = "Low Risk";
+                    riskClass = "risk-low";
+                    recommendation =
+                        "While your risk is relatively low, basic coverage is still recommended. Unexpected events can happen to anyone. Explore our basic insurance plans for essential protection.";
+                }
+
+                return {
+                    success: true,
+                    risk_percentage: riskPercentageValue,
+                    risk_level: riskLevel,
+                    risk_class: riskClass,
+                    recommendation: recommendation,
+                };
+            }
+
+            // Form submission handler
+            form.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                showLoading();
+
+                try {
+                    const formData = new FormData(this);
+                    let result;
+
+                    // Check if server is available
+                    const serverAvailable = await checkServerHealth();
+
+                    if (serverAvailable) {
+                        // Use API prediction
+                        result = await predictInsurance(formData);
+                        console.log("API prediction result:", result);
+                    } else {
+                        // Use fallback prediction
+                        console.log(
+                            "Server not available, using fallback prediction"
+                        );
+                        result = fallbackPrediction(formData);
+                    }
+
+                    // Show result
+                    showResult(result);
+                } catch (error) {
+                    console.error("Prediction error:", error);
+
+                    // Try fallback if API fails
+                    try {
+                        const formData = new FormData(form);
+                        const result = fallbackPrediction(formData);
+                        showResult(result);
+
+                        // Show a warning that we're using fallback
+                        showError(
+                            "Note: Using simplified prediction model. For full AI analysis, please ensure the prediction server is running."
+                        );
+                    } catch (fallbackError) {
+                        console.error(
+                            "Fallback prediction also failed:",
+                            fallbackError
+                        );
+                        showError(
+                            "Unable to process your request. Please check all fields and try again."
+                        );
+                    }
+                } finally {
+                    hideLoading();
+                }
+            });
+
+            // Initialize page
+            document.addEventListener("DOMContentLoaded", async function () {
+                console.log("Insurance Risk Calculator initialized");
+
+                // Check server status on page load
+                const serverAvailable = await checkServerHealth();
+                if (serverAvailable) {
+                    console.log("✅ Prediction server is available");
+                } else {
+                    console.log(
+                        "⚠️ Prediction server is not available, will use fallback method"
+                    );
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InsureCheck - Data Insights & Analytics</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                line-height: 1.6;
+                color: #6b7280;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* Header */
+            header {
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                margin-bottom: 3rem;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #6b7280;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #1e3a8a;
+            }
+
+            .cta-button {
+                background: #1e3a8a;
+                color: #ffffff;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .cta-button:hover {
+                background: #1e40af;
+            }
+
+            /* Hero Section */
+            .hero-section {
+                text-align: center;
+                padding: 3rem 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(16, 185, 129, 0.1) 0%,
+                    rgba(34, 211, 238, 0.1) 100%
+                );
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .hero-section p {
+                font-size: 1.25rem;
+                color: #6b7280;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #1e3a8a;
+                margin-bottom: 2rem;
+            }
+
+            .grid {
+                display: grid;
+                gap: 2rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .card {
+                background: #ffffff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card h3 {
+                color: #1e3a8a;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .dataset-overview {
+                background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%);
+                padding: 2rem;
+                border-radius: 0.5rem;
+                margin-bottom: 3rem;
+                text-align: center;
+            }
+
+            .dataset-overview h3 {
+                color: #1e3a8a;
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .stat-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+                margin: 2rem 0;
+            }
+
+            .stat-item {
+                text-align: center;
+                background: white;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .stat-number {
+                font-size: 2rem;
+                font-weight: 800;
+                color: #1e3a8a;
+                margin-bottom: 0.5rem;
+            }
+
+            .chart-container {
+                background: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin: 2rem 0;
+            }
+
+            .chart-container h4 {
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+                font-size: 1.25rem;
+            }
+
+            .bar-chart {
+                display: flex;
+                align-items: end;
+                gap: 1rem;
+                height: 200px;
+                margin: 2rem 0;
+            }
+
+            .bar {
+                background: linear-gradient(to top, #1e3a8a 0%, #10b981 100%);
+                border-radius: 4px 4px 0 0;
+                min-width: 60px;
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                align-items: center;
+                color: white;
+                font-weight: bold;
+                padding: 0.5rem;
+                position: relative;
+            }
+
+            .bar-label {
+                position: absolute;
+                bottom: -25px;
+                font-size: 0.8rem;
+                color: #6b7280;
+                white-space: nowrap;
+            }
+
+            .insight-card {
+                background: #f0f9ff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                border-left: 4px solid #1e3a8a;
+                margin: 2rem 0;
+            }
+
+            .insight-card h4 {
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .key-finding {
+                background: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
+                color: white;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+
+            .comparison-chart {
+                display: flex;
+                gap: 2rem;
+                margin: 2rem 0;
+            }
+
+            .comparison-item {
+                flex: 1;
+                text-align: center;
+                background: white;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .comparison-item.high {
+                border: 3px solid #10b981;
+            }
+
+            .comparison-item.low {
+                border: 3px solid #ef4444;
+            }
+
+            .percentage-display {
+                font-size: 3rem;
+                font-weight: 800;
+                margin: 1rem 0;
+            }
+
+            .high .percentage-display {
+                color: #10b981;
+            }
+
+            .low .percentage-display {
+                color: #ef4444;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .hero-section h1 {
+                    font-size: 2rem;
+                }
+
+                .section h2 {
+                    font-size: 2rem;
+                }
+
+                .comparison-chart {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="logo">insurecheck</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="problem.html">Problem</a></li>
+                    <li><a href="solution.html">Solution</a></li>
+                    <li>
+                        <a href="data.html" style="color: #1e3a8a"
+                            >Data Insights</a
+                        >
+                    </li>
+                    <li><a href="model.html">Our Model</a></li>
+                    <li><a href="check.html">Check Risk</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="check.html" class="cta-button">Get A Quote</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>Data Insights & Analytics</h1>
+                <p>
+                    Comprehensive analysis of 381,109 customer records reveals
+                    critical patterns in vehicle insurance interest, enabling
+                    data-driven strategies for better customer targeting and
+                    community protection.
+                </p>
+            </div>
+        </section>
+
+        <!-- Dataset Overview -->
+        <section class="section">
+            <div class="container">
+                <div class="dataset-overview">
+                    <h3>📊 Dataset Overview</h3>
+                    <p>
+                        Our analysis is based on a robust and comprehensive
+                        dataset providing reliable insights into vehicle
+                        insurance behavior patterns.
+                    </p>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">381,109</div>
+                            <div>Total Records</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div>Key Features</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">0</div>
+                            <div>Missing Values</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">0</div>
+                            <div>Duplicates</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vehicle Damage Impact -->
+        <section class="section" style="background: #f9fafb">
+            <div class="container">
+                <h2>🚗 Vehicle Damage: The Strongest Predictor</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="chart-container">
+                            <h4>Insurance Interest by Vehicle Damage Status</h4>
+                            <div class="comparison-chart">
+                                <div class="comparison-item low">
+                                    <h5>No Damage</h5>
+                                    <div class="percentage-display">~2%</div>
+                                    <p>Interest Rate</p>
+                                </div>
+                                <div class="comparison-item high">
+                                    <h5>With Damage</h5>
+                                    <div class="percentage-display">~23%</div>
+                                    <p>Interest Rate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="insight-card">
+                            <h4>🔍 Key Insight</h4>
+                            <p>
+                                <strong
+                                    >Customers with vehicle damage history are
+                                    11x more likely to be interested in
+                                    insurance.</strong
+                                >
+                            </p>
+                            <p>
+                                This underscores that direct experience with
+                                risk and financial implications serves as a
+                                potent driver for seeking insurance coverage.
+                            </p>
+                        </div>
+                        <div class="key-finding">
+                            <h4>💡 Strategic Implication</h4>
+                            <p>
+                                Target customers who have experienced vehicle
+                                damage with tailored messaging emphasizing
+                                protection benefits and financial security.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Age Demographics -->
+        <section class="section">
+            <div class="container">
+                <h2>👥 Age Demographics: Career-Stage Patterns</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="chart-container">
+                            <h4>Insurance Interest by Age Group</h4>
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 60px">
+                                    <span>15%</span>
+                                    <span class="bar-label">20-30</span>
+                                </div>
+                                <div class="bar" style="height: 150px">
+                                    <span>30%</span>
+                                    <span class="bar-label">31-40</span>
+                                </div>
+                                <div class="bar" style="height: 140px">
+                                    <span>32%</span>
+                                    <span class="bar-label">41-50</span>
+                                </div>
+                                <div class="bar" style="height: 100px">
+                                    <span>25%</span>
+                                    <span class="bar-label">51-60</span>
+                                </div>
+                                <div class="bar" style="height: 80px">
+                                    <span>20%</span>
+                                    <span class="bar-label">60+</span>
+                                </div>
+                            </div>
+                            <p>
+                                <strong>Peak Interest:</strong> Early Career
+                                (31-40) and Mid Career (41-50) age groups show
+                                highest insurance interest rates.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="insight-card">
+                            <h4>📈 Age-Related Trends</h4>
+                            <p>
+                                Insurance interest exhibits clear career-stage
+                                patterns, peaking among customers in their prime
+                                earning years (31-50) when financial planning
+                                and risk mitigation become higher priorities.
+                            </p>
+                            <ul style="margin-top: 1rem; padding-left: 1rem">
+                                <li>
+                                    <strong>Young Adults (20-30):</strong>
+                                    Lowest interest, potential for education
+                                    campaigns
+                                </li>
+                                <li>
+                                    <strong>Early/Mid Career (31-50):</strong>
+                                    Peak interest, primary target market
+                                </li>
+                                <li>
+                                    <strong>Seniors (60+):</strong> Moderate
+                                    interest, value-focused messaging
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="key-finding">
+                            <h4>🎯 Targeting Strategy</h4>
+                            <p>
+                                Focus primary marketing efforts on 31-50 age
+                                group while developing specialized awareness
+                                campaigns for underserved younger demographics.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regional Analysis -->
+        <section class="section" style="background: #f9fafb">
+            <div class="container">
+                <h2>🗺️ Regional Variations: Opportunity Mapping</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="chart-container">
+                            <h4>Regional Insurance Interest Rates</h4>
+                            <div
+                                style="
+                                    background: #fee2e2;
+                                    padding: 1rem;
+                                    border-radius: 0.5rem;
+                                    margin: 1rem 0;
+                                    border-left: 4px solid #dc2626;
+                                "
+                            >
+                                <strong style="color: #dc2626"
+                                    >Underserved Regions:</strong
+                                >
+                                <ul style="margin-top: 0.5rem">
+                                    <li>
+                                        Region 44.0:
+                                        <strong>4.0% interest</strong>
+                                    </li>
+                                    <li>
+                                        Region 25.0:
+                                        <strong>4.3% interest</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div
+                                style="
+                                    background: #d1fae5;
+                                    padding: 1rem;
+                                    border-radius: 0.5rem;
+                                    margin: 1rem 0;
+                                    border-left: 4px solid #10b981;
+                                "
+                            >
+                                <strong style="color: #10b981"
+                                    >National Average:</strong
+                                >
+                                <ul style="margin-top: 0.5rem">
+                                    <li>
+                                        Overall: <strong>12.3% interest</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="insight-card">
+                            <h4>🎯 Geographic Opportunities</h4>
+                            <p>
+                                Significant regional variations reveal specific
+                                areas where localized awareness campaigns could
+                                be most beneficial and impactful.
+                            </p>
+                            <p>
+                                <strong>Strategic Focus:</strong> Regions with
+                                4-4.3% interest rates represent the greatest
+                                potential for improvement through targeted
+                                interventions.
+                            </p>
+                        </div>
+                        <div class="key-finding">
+                            <h4>📍 Localization Strategy</h4>
+                            <p>
+                                Deploy region-specific campaigns addressing
+                                local concerns, cultural factors, and economic
+                                conditions to increase insurance awareness and
+                                adoption.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Insights -->
+        <section class="section">
+            <div class="container">
+                <h2>📊 Additional Key Insights</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3>💰 Premium Sensitivity</h3>
+                        <p>
+                            Analysis reveals clear price sensitivity patterns
+                            across customer segments, enabling flexible pricing
+                            strategies tailored to diverse financial capacities.
+                        </p>
+                        <div
+                            style="
+                                background: #f0f9ff;
+                                padding: 1rem;
+                                border-radius: 0.5rem;
+                                margin-top: 1rem;
+                            "
+                        >
+                            <strong>Insight:</strong> Different demographic
+                            groups show varying willingness to pay, requiring
+                            segmented pricing approaches.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>📞 Sales Channel Effectiveness</h3>
+                        <p>
+                            Certain sales channels demonstrate significantly
+                            higher success rates, indicating the critical
+                            importance of communication method and customer
+                            experience.
+                        </p>
+                        <div
+                            style="
+                                background: #f0f9ff;
+                                padding: 1rem;
+                                border-radius: 0.5rem;
+                                margin-top: 1rem;
+                            "
+                        >
+                            <strong>Insight:</strong> Channel optimization can
+                            dramatically improve conversion rates and customer
+                            satisfaction.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>⚖️ Gender Patterns</h3>
+                        <p>
+                            Subtle but measurable differences in insurance
+                            interest between genders provide additional
+                            segmentation opportunities.
+                        </p>
+                        <div
+                            style="
+                                background: #f0f9ff;
+                                padding: 1rem;
+                                border-radius: 0.5rem;
+                                margin-top: 1rem;
+                            "
+                        >
+                            <strong>Males:</strong> 13.84% interest<br />
+                            <strong>Females:</strong> 10.39% interest
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Engineering -->
+        <section class="section" style="background: #f9fafb">
+            <div class="container">
+                <h2>🔧 Advanced Feature Engineering</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3>Enhanced Data Processing</h3>
+                        <ul style="list-style: none; padding: 0">
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Age categorization into meaningful career
+                                stages
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Premium categorization by quantiles (Low,
+                                Medium, High, Very High)
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Vehicle age numerical mapping for model
+                                compatibility
+                            </li>
+                            <li style="padding: 0.5rem 0">
+                                ✅ Risk profile creation combining damage
+                                history and demographics
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Data Quality Advantages</h3>
+                        <ul style="list-style: none; padding: 0">
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Zero missing values detected
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ No duplicate records found
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ 12 carefully selected predictive features
+                            </li>
+                            <li style="padding: 0.5rem 0">
+                                ✅ Robust statistical foundation for modeling
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section
+            class="section"
+            style="
+                background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+                color: white;
+                text-align: center;
+            "
+        >
+            <div class="container">
+                <h2 style="color: white; margin-bottom: 1rem">
+                    Ready to Apply These Insights?
+                </h2>
+                <p
+                    style="
+                        font-size: 1.25rem;
+                        margin-bottom: 2rem;
+                        color: #d1d5db;
+                    "
+                >
+                    See how our AI model transforms these data insights into
+                    actionable predictions for your business.
+                </p>
+                <div
+                    style="
+                        display: flex;
+                        gap: 2rem;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                    "
+                >
+                    <a
+                        href="model.html"
+                        style="
+                            background: white;
+                            color: #1e3a8a;
+                            padding: 1rem 2rem;
+                            border-radius: 0.5rem;
+                            text-decoration: none;
+                            font-weight: 600;
+                        "
+                        >View Our Model →</a
+                    >
+                    <a
+                        href="check.html"
+                        style="
+                            background: transparent;
+                            color: white;
+                            padding: 1rem 2rem;
+                            border: 2px solid white;
+                            border-radius: 0.5rem;
+                            text-decoration: none;
+                            font-weight: 600;
+                        "
+                        >Try Risk Assessment</a
+                    >
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

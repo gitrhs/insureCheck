@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InsureCheck - Our Machine Learning Model</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                line-height: 1.6;
+                color: #6b7280;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* Header */
+            header {
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                margin-bottom: 3rem;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #6b7280;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #1e3a8a;
+            }
+
+            .cta-button {
+                background: #1e3a8a;
+                color: #ffffff;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .cta-button:hover {
+                background: #1e40af;
+            }
+
+            /* Hero Section */
+            .hero-section {
+                text-align: center;
+                padding: 3rem 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(124, 58, 237, 0.1) 0%,
+                    rgba(30, 58, 138, 0.1) 100%
+                );
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: #7c3aed;
+                margin-bottom: 1rem;
+            }
+
+            .hero-section p {
+                font-size: 1.25rem;
+                color: #6b7280;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #1e3a8a;
+                margin-bottom: 2rem;
+            }
+
+            .grid {
+                display: grid;
+                gap: 2rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .card {
+                background: #ffffff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card h3 {
+                color: #1e3a8a;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .winner-card {
+                background: linear-gradient(135deg, #f3e8ff 0%, #dbeafe 100%);
+                border: 3px solid #7c3aed;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                margin-bottom: 3rem;
+                text-align: center;
+            }
+
+            .winner-card h3 {
+                color: #7c3aed;
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .winner-card p {
+                font-size: 1.125rem;
+                color: #374151;
+            }
+
+            .performance-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
+                margin: 2rem 0;
+            }
+
+            .metric-card {
+                text-align: center;
+                background: linear-gradient(135deg, #7c3aed 0%, #1e3a8a 100%);
+                color: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+            }
+
+            .metric-number {
+                font-size: 3rem;
+                font-weight: 800;
+                margin-bottom: 0.5rem;
+            }
+
+            .comparison-table {
+                background: white;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                margin: 2rem 0;
+            }
+
+            .comparison-table table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .comparison-table th {
+                background: #1e3a8a;
+                color: white;
+                padding: 1rem;
+                text-align: left;
+                font-weight: 600;
+            }
+
+            .comparison-table td {
+                padding: 1rem;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .comparison-table tr:hover {
+                background: #f9fafb;
+            }
+
+            .best-model {
+                background: #ecfdf5 !important;
+            }
+
+            .best-model td {
+                font-weight: 600;
+                color: #10b981;
+            }
+
+            .process-section {
+                background: #f9fafb;
+                padding: 4rem 0;
+            }
+
+            .process-step {
+                background: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                margin-bottom: 2rem;
+            }
+
+            .process-step h4 {
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+                font-size: 1.25rem;
+            }
+
+            .tech-stack {
+                background: #f0f9ff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                border-left: 4px solid #1e3a8a;
+            }
+
+            .tech-stack h4 {
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .feature-importance {
+                background: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .feature-bar {
+                display: flex;
+                align-items: center;
+                margin: 1rem 0;
+            }
+
+            .feature-name {
+                width: 150px;
+                font-weight: 500;
+                color: #374151;
+            }
+
+            .feature-progress {
+                flex: 1;
+                height: 20px;
+                background: #e5e7eb;
+                border-radius: 10px;
+                margin: 0 1rem;
+                overflow: hidden;
+            }
+
+            .feature-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #1e3a8a 0%, #10b981 100%);
+                border-radius: 10px;
+                transition: width 0.5s ease;
+            }
+
+            .feature-value {
+                font-weight: 600;
+                color: #1e3a8a;
+                min-width: 50px;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .hero-section h1 {
+                    font-size: 2rem;
+                }
+
+                .section h2 {
+                    font-size: 2rem;
+                }
+
+                .comparison-table {
+                    font-size: 0.9rem;
+                }
+
+                .comparison-table th,
+                .comparison-table td {
+                    padding: 0.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="logo">insurecheck</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="problem.html">Problem</a></li>
+                    <li><a href="solution.html">Solution</a></li>
+                    <li><a href="data.html">Data Insights</a></li>
+                    <li>
+                        <a href="model.html" style="color: #1e3a8a"
+                            >Our Model</a
+                        >
+                    </li>
+                    <li><a href="check.html">Check Risk</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="check.html" class="cta-button">Get A Quote</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>XGBoost: Our Winning Algorithm</h1>
+                <p>
+                    After comprehensive evaluation of multiple machine learning
+                    models, XGBoost emerged as the optimal choice for predicting
+                    customer insurance interest with superior performance across
+                    all key metrics.
+                </p>
+            </div>
+        </section>
+
+        <!-- Winner Announcement -->
+        <section class="section">
+            <div class="container">
+                <div class="winner-card">
+                    <h3>🏆 XGBoost: The Champion Model</h3>
+                    <p>
+                        Our rigorous testing and comparison process identified
+                        XGBoost as the clear winner, delivering exceptional
+                        performance in identifying customers most likely to be
+                        interested in vehicle insurance.
+                    </p>
+                </div>
+
+                <div class="performance-grid">
+                    <div class="metric-card">
+                        <div class="metric-number">86%</div>
+                        <div>AUC Score</div>
+                        <small>Overall Model Performance</small>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">91%</div>
+                        <div>Recall Rate</div>
+                        <small>Interested Customer Capture</small>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">29%</div>
+                        <div>Precision</div>
+                        <small>Prediction Accuracy</small>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">0.44</div>
+                        <div>F1-Score</div>
+                        <small>Balanced Performance</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Comparison -->
+        <section class="section" style="background: #f9fafb">
+            <div class="container">
+                <h2>📊 Model Performance Comparison</h2>
+                <p
+                    style="
+                        text-align: center;
+                        margin-bottom: 2rem;
+                        color: #6b7280;
+                    "
+                >
+                    Comprehensive evaluation across multiple algorithms to
+                    identify the best performer for insurance interest
+                    prediction.
+                </p>
+
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>AUC Score</th>
+                                <th>Precision (Interested)</th>
+                                <th>Recall (Interested)</th>
+                                <th>F1-Score (Interested)</th>
+                                <th>Business Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="best-model">
+                                <td><strong>XGBoost</strong> 🏆</td>
+                                <td><strong>0.86</strong></td>
+                                <td><strong>0.29</strong></td>
+                                <td><strong>0.91</strong></td>
+                                <td><strong>0.44</strong></td>
+                                <td><strong>Optimal Balance</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Logistic Regression</td>
+                                <td>0.83</td>
+                                <td>0.25</td>
+                                <td>0.98</td>
+                                <td>0.40</td>
+                                <td>Good Recall</td>
+                            </tr>
+                            <tr>
+                                <td>Random Forest</td>
+                                <td>0.83</td>
+                                <td>0.37</td>
+                                <td>0.10</td>
+                                <td>0.16</td>
+                                <td>Poor Recall</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3>🎯 Why XGBoost Wins</h3>
+                        <ul style="list-style: none; padding: 0">
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅
+                                <strong>Highest Recall (91%):</strong> Captures
+                                91% of truly interested customers
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅
+                                <strong>Best AUC Score (86%):</strong> Superior
+                                discriminative power
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅
+                                <strong>Balanced Performance:</strong> Optimal
+                                across both customer classes
+                            </li>
+                            <li style="padding: 0.5rem 0">
+                                ✅ <strong>Business Priority:</strong> Maximizes
+                                revenue opportunities
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>💼 Business Impact</h3>
+                        <p>
+                            <strong>Revenue Optimization:</strong> 91% recall
+                            means we capture almost all interested customers,
+                            critical for maximizing revenue opportunities.
+                        </p>
+                        <p>
+                            <strong>Cost Efficiency:</strong> 29% precision
+                            means 1 in 3.4 targeted customers will be genuinely
+                            interested, providing substantial cost savings over
+                            random targeting.
+                        </p>
+                        <p>
+                            <strong>Competitive Advantage:</strong> Superior
+                            performance enables market leadership through
+                            data-driven customer acquisition.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Training Process -->
+        <section class="process-section">
+            <div class="container">
+                <h2>🔬 Model Development Process</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="process-step">
+                            <h4>1. Data Preparation</h4>
+                            <p>
+                                Clean dataset of 381,109 records split into
+                                training and testing sets with stratified
+                                sampling to maintain class distribution balance
+                                (87.7% vs 12.3%).
+                            </p>
+                        </div>
+
+                        <div class="process-step">
+                            <h4>2. Class Balancing with SMOTE</h4>
+                            <p>
+                                Applied SMOTE (Synthetic Minority Oversampling
+                                Technique) to handle severe class imbalance
+                                during training, creating synthetic examples of
+                                interested customers.
+                            </p>
+                        </div>
+
+                        <div class="process-step">
+                            <h4>3. Feature Engineering</h4>
+                            <p>
+                                Comprehensive feature transformation including
+                                age categorization, premium quantiles, vehicle
+                                age mapping, and risk profile creation.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="process-step">
+                            <h4>4. Model Training & Validation</h4>
+                            <p>
+                                Trained multiple algorithms with
+                                cross-validation, hyperparameter tuning, and
+                                rigorous performance evaluation across
+                                business-critical metrics.
+                            </p>
+                        </div>
+
+                        <div class="process-step">
+                            <h4>5. Performance Optimization</h4>
+                            <p>
+                                Fine-tuned XGBoost with scale_pos_weight
+                                adjustment and class balancing to optimize for
+                                business objectives and maximize customer
+                                capture.
+                            </p>
+                        </div>
+
+                        <div class="process-step">
+                            <h4>6. Model Deployment</h4>
+                            <p>
+                                Implemented production-ready prediction pipeline
+                                with real-time scoring capabilities and
+                                continuous monitoring for sustained performance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Importance -->
+        <section class="section">
+            <div class="container">
+                <h2>🔍 Feature Importance Analysis</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="feature-importance">
+                            <h4>Top Predictive Features</h4>
+                            <div class="feature-bar">
+                                <div class="feature-name">Vehicle Damage</div>
+                                <div class="feature-progress">
+                                    <div
+                                        class="feature-fill"
+                                        style="width: 85%"
+                                    ></div>
+                                </div>
+                                <div class="feature-value">85%</div>
+                            </div>
+                            <div class="feature-bar">
+                                <div class="feature-name">Age</div>
+                                <div class="feature-progress">
+                                    <div
+                                        class="feature-fill"
+                                        style="width: 72%"
+                                    ></div>
+                                </div>
+                                <div class="feature-value">72%</div>
+                            </div>
+                            <div class="feature-bar">
+                                <div class="feature-name">Annual Premium</div>
+                                <div class="feature-progress">
+                                    <div
+                                        class="feature-fill"
+                                        style="width: 65%"
+                                    ></div>
+                                </div>
+                                <div class="feature-value">65%</div>
+                            </div>
+                            <div class="feature-bar">
+                                <div class="feature-name">Region Code</div>
+                                <div class="feature-progress">
+                                    <div
+                                        class="feature-fill"
+                                        style="width: 58%"
+                                    ></div>
+                                </div>
+                                <div class="feature-value">58%</div>
+                            </div>
+                            <div class="feature-bar">
+                                <div class="feature-name">
+                                    Previously Insured
+                                </div>
+                                <div class="feature-progress">
+                                    <div
+                                        class="feature-fill"
+                                        style="width: 45%"
+                                    ></div>
+                                </div>
+                                <div class="feature-value">45%</div>
+                            </div>
+                            <div class="feature-bar">
+                                <div class="feature-name">Vehicle Age</div>
+                                <div class="feature-progress">
+                                    <div
+                                        class="feature-fill"
+                                        style="width: 38%"
+                                    ></div>
+                                </div>
+                                <div class="feature-value">38%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card">
+                            <h3>💡 Key Insights</h3>
+                            <p>
+                                <strong>Vehicle Damage (85%):</strong>
+                                Overwhelmingly the most important predictor,
+                                confirming that experience with risk drives
+                                insurance interest.
+                            </p>
+
+                            <p>
+                                <strong>Age (72%):</strong> Strong predictor
+                                reflecting career-stage patterns and financial
+                                responsibility development.
+                            </p>
+
+                            <p>
+                                <strong>Annual Premium (65%):</strong> Price
+                                sensitivity plays a crucial role in insurance
+                                decision-making.
+                            </p>
+
+                            <p>
+                                <strong>Regional Factors (58%):</strong>
+                                Geographic location significantly influences
+                                insurance attitudes and needs.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>🎯 Actionable Implications</h3>
+                            <p>
+                                These feature importance rankings guide our
+                                targeting strategy, emphasizing damage history
+                                and age-based segmentation for maximum campaign
+                                effectiveness.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Implementation -->
+        <section class="section" style="background: #f9fafb">
+            <div class="container">
+                <h2>⚙️ Technical Implementation</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="tech-stack">
+                            <h4>🐍 Technology Stack</h4>
+                            <ul style="list-style: none; padding: 0">
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    🔹 <strong>Python:</strong> Core programming
+                                    language
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    🔹
+                                    <strong>XGBoost:</strong> High-performance
+                                    gradient boosting
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    🔹 <strong>Scikit-learn:</strong> Machine
+                                    learning pipeline
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    🔹 <strong>Pandas & NumPy:</strong> Data
+                                    manipulation
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    🔹 <strong>SMOTE:</strong> Class balancing
+                                    technique
+                                </li>
+                                <li style="padding: 0.5rem 0">
+                                    🔹
+                                    <strong>Google Colab:</strong> Development
+                                    environment
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tech-stack">
+                            <h4>🔧 Model Configuration</h4>
+                            <ul style="list-style: none; padding: 0">
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    ⚡ <strong>Algorithm:</strong> XGBoost
+                                    Classifier
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    ⚖️
+                                    <strong>Class Weighting:</strong> Balanced
+                                    approach
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    🎯 <strong>Objective:</strong> Binary
+                                    classification
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    📊 <strong>Evaluation:</strong> AUC-ROC,
+                                    Precision, Recall
+                                </li>
+                                <li
+                                    style="
+                                        padding: 0.5rem 0;
+                                        border-bottom: 1px solid #e5e7eb;
+                                    "
+                                >
+                                    🔄 <strong>Validation:</strong> Stratified
+                                    train-test split
+                                </li>
+                                <li style="padding: 0.5rem 0">
+                                    🎛️
+                                    <strong>Optimization:</strong>
+                                    Scale_pos_weight tuning
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section
+            class="section"
+            style="
+                background: linear-gradient(135deg, #7c3aed 0%, #1e3a8a 100%);
+                color: white;
+                text-align: center;
+            "
+        >
+            <div class="container">
+                <h2 style="color: white; margin-bottom: 1rem">
+                    Experience Our AI Model in Action
+                </h2>
+                <p
+                    style="
+                        font-size: 1.25rem;
+                        margin-bottom: 2rem;
+                        color: #d1d5db;
+                    "
+                >
+                    See how our XGBoost model predicts your insurance interest
+                    with industry-leading accuracy.
+                </p>
+                <div
+                    style="
+                        display: flex;
+                        gap: 2rem;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                    "
+                >
+                    <a
+                        href="check.html"
+                        style="
+                            background: white;
+                            color: #7c3aed;
+                            padding: 1rem 2rem;
+                            border-radius: 0.5rem;
+                            text-decoration: none;
+                            font-weight: 600;
+                        "
+                        >Try Risk Assessment →</a
+                    >
+                    <a
+                        href="contact.html"
+                        style="
+                            background: transparent;
+                            color: white;
+                            padding: 1rem 2rem;
+                            border: 2px solid white;
+                            border-radius: 0.5rem;
+                            text-decoration: none;
+                            font-weight: 600;
+                        "
+                        >Contact Our Team</a
+                    >
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

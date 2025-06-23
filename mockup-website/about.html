@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InsureCheck - About Us</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                line-height: 1.6;
+                color: #6b7280;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* Header */
+            header {
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                margin-bottom: 3rem;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #6b7280;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #1e3a8a;
+            }
+
+            .cta-button {
+                background: #1e3a8a;
+                color: #ffffff;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .cta-button:hover {
+                background: #1e40af;
+            }
+
+            /* Main Content */
+            .hero-section {
+                text-align: center;
+                padding: 3rem 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(16, 185, 129, 0.05) 0%,
+                    rgba(34, 211, 238, 0.05) 100%
+                );
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .hero-section p {
+                font-size: 1.25rem;
+                color: #6b7280;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #1e3a8a;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .grid {
+                display: grid;
+                gap: 2rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .card {
+                background: #ffffff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card h3 {
+                color: #1e3a8a;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .stat-card {
+                text-align: center;
+                background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+                color: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+                font-weight: 800;
+                margin-bottom: 0.5rem;
+            }
+
+            .team-section {
+                background: #f9fafb;
+                padding: 4rem 0;
+            }
+
+            .team-card {
+                text-align: center;
+                background: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .team-card .avatar {
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%);
+                border-radius: 50%;
+                margin: 0 auto 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+
+            .team-card h4 {
+                color: #1e3a8a;
+                margin-bottom: 0.5rem;
+            }
+
+            .team-card .role {
+                color: #10b981;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            .team-card .matric {
+                color: #6b7280;
+                font-size: 0.9rem;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .hero-section h1 {
+                    font-size: 2rem;
+                }
+
+                .section h2 {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="logo">insurecheck</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="about.html" style="color: #1e3a8a">About</a>
+                    </li>
+                    <li><a href="problem.html">Problem</a></li>
+                    <li><a href="solution.html">Solution</a></li>
+                    <li><a href="data.html">Data Insights</a></li>
+                    <li><a href="model.html">Our Model</a></li>
+                    <li><a href="check.html">Check Risk</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="check.html" class="cta-button">Get A Quote</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>About InsureCheck</h1>
+                <p>
+                    Transforming insurance accessibility through AI-powered data
+                    analytics and community-focused solutions for a financially
+                    secure future.
+                </p>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="section">
+            <div class="container">
+                <div class="grid grid-2">
+                    <div>
+                        <h2 style="text-align: left; margin-bottom: 1rem">
+                            Our Mission
+                        </h2>
+                        <p style="font-size: 1.125rem; margin-bottom: 2rem">
+                            InsureCheck is a data-driven platform designed to
+                            address a critical community challenge: the lack of
+                            adequate vehicle insurance. By applying data
+                            analytics and machine learning, our project aims to
+                            identify individuals who are most likely to need and
+                            be interested in vehicle insurance.
+                        </p>
+
+                        <p style="font-size: 1.125rem; margin-bottom: 2rem">
+                            The platform helps insurance providers and community
+                            organizations conduct targeted awareness campaigns
+                            and outreach, ultimately fostering greater financial
+                            security within the community. This project
+                            transforms raw data into an actionable tool that
+                            serves both business needs and broader social
+                            stability goals.
+                        </p>
+
+                        <p style="font-size: 1.125rem">
+                            We believe in leveraging technology for social good,
+                            creating solutions that not only drive business
+                            success but also contribute to community resilience
+                            and financial inclusion.
+                        </p>
+                    </div>
+                    <div class="grid grid-3">
+                        <div class="stat-card">
+                            <div class="stat-number">381K+</div>
+                            <div>Dataset Records</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">86%</div>
+                            <div>Model Accuracy</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">91%</div>
+                            <div>Recall Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SDG Alignment Section -->
+        <section class="section" style="background: #f9fafb">
+            <div class="container">
+                <h2>Sustainable Development Goals Alignment</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3>🎯 SDG 1: No Poverty</h3>
+                        <p>
+                            Insurance serves as an essential safety net,
+                            preventing families from falling into poverty due to
+                            unexpected vehicle accidents and repair costs.
+                            Without insurance, a single accident can devastate a
+                            family's financial stability.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3>💼 SDG 8: Decent Work</h3>
+                        <p>
+                            Many people depend on their vehicles for work or
+                            operating small businesses. Insurance protection
+                            guarantees employment stability and ongoing economic
+                            participation in the community.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3>🏗️ SDG 9: Innovation & Infrastructure</h3>
+                        <p>
+                            We leverage technology to increase access to
+                            financial services like insurance, contributing to
+                            the development of a more robust economic
+                            infrastructure and promoting financial inclusion.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Impact Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Our Impact</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3>📈 Business Benefits</h3>
+                        <ul style="list-style: none; padding: 0">
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Reduce customer acquisition costs by 40%
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Increase conversion rates by 3x
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Optimize marketing campaign effectiveness
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Enhance customer satisfaction through
+                                personalization
+                            </li>
+                            <li style="padding: 0.5rem 0">
+                                ✅ Data-driven decision making
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>🌍 Social Impact</h3>
+                        <ul style="list-style: none; padding: 0">
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Increase insurance awareness in underserved
+                                communities
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Promote financial inclusion and literacy
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Reduce economic vulnerability from accidents
+                            </li>
+                            <li
+                                style="
+                                    padding: 0.5rem 0;
+                                    border-bottom: 1px solid #e5e7eb;
+                                "
+                            >
+                                ✅ Strengthen community economic resilience
+                            </li>
+                            <li style="padding: 0.5rem 0">
+                                ✅ Bridge the gap between needs and solutions
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="container">
+                <h2 style="color: #1e3a8a; margin-bottom: 3rem">
+                    Our Development Team
+                </h2>
+                <div class="grid grid-3">
+                    <div class="team-card">
+                        <div class="avatar">AZ</div>
+                        <h4>Ahmad Zamil Muttaqin Bin Ahmad Zaidi</h4>
+                        <div class="role">Project Lead & Analysis</div>
+                        <div class="matric">22004054</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="avatar">RD</div>
+                        <h4>Rafi Daffa Ramadhani</h4>
+                        <div class="role">
+                            Backend Developer, Frontend Developer, and Model
+                        </div>
+                        <div class="matric">S2155407</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="avatar">MH</div>
+                        <h4>Muhammad Haziq Halifi Bin Ab Rahman</h4>
+                        <div class="role">Backend Developer</div>
+                        <div class="matric">U2101028</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="avatar">LE</div>
+                        <h4>Loginova Ekaterina</h4>
+                        <div class="role">Frontend Developer & Prototype</div>
+                        <div class="matric">24076021</div>
+                    </div>
+                    <div class="team-card">
+                        <div class="avatar">MK</div>
+                        <h4>Muhammad Huseyin Adem Kilicman</h4>
+                        <div class="role">Data Analyst & EDA</div>
+                        <div class="matric">22061226</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2rem">
+                    <p style="color: #6b7280; font-style: italic">
+                        University of Malaya - GFW003 Data Analytics for Digital
+                        Community
+                    </p>
+                    <p style="color: #6b7280; font-style: italic">
+                        Semester 2, 2024/2025
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Our Technology Stack</h2>
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3>🤖 Machine Learning</h3>
+                        <p>
+                            <strong>XGBoost Algorithm:</strong> Our winning
+                            model with 86% AUC score and 91% recall rate,
+                            specifically optimized for identifying customers
+                            likely to be interested in insurance.
+                        </p>
+                        <ul style="margin-top: 1rem; padding-left: 1rem">
+                            <li>Advanced gradient boosting</li>
+                            <li>SMOTE for class balancing</li>
+                            <li>Feature engineering and optimization</li>
+                            <li>Cross-validation and hyperparameter tuning</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>📊 Data Analytics</h3>
+                        <p>
+                            <strong>Comprehensive Analysis:</strong> Processing
+                            381,109 customer records with 12 key features to
+                            extract meaningful insights and patterns.
+                        </p>
+                        <ul style="margin-top: 1rem; padding-left: 1rem">
+                            <li>Python, Pandas, NumPy</li>
+                            <li>Scikit-learn for ML pipeline</li>
+                            <li>
+                                Matplotlib, Seaborn, Plotly for visualization
+                            </li>
+                            <li>Google Colab for development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

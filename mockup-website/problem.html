@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InsureCheck - The Under-Insurance Crisis</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                line-height: 1.6;
+                color: #6b7280;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* Header */
+            header {
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                margin-bottom: 3rem;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #6b7280;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #1e3a8a;
+            }
+
+            .cta-button {
+                background: #1e3a8a;
+                color: #ffffff;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .cta-button:hover {
+                background: #1e40af;
+            }
+
+            /* Main Content */
+            .hero-section {
+                text-align: center;
+                padding: 3rem 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(239, 68, 68, 0.1) 0%,
+                    rgba(245, 158, 11, 0.1) 100%
+                );
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: #dc2626;
+                margin-bottom: 1rem;
+            }
+
+            .hero-section p {
+                font-size: 1.25rem;
+                color: #6b7280;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #1e3a8a;
+                margin-bottom: 2rem;
+            }
+
+            .grid {
+                display: grid;
+                gap: 2rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .card {
+                background: #ffffff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card h3 {
+                color: #1e3a8a;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .alert-card {
+                background: linear-gradient(135deg, #fee2e2 0%, #fef3c7 100%);
+                border-left: 4px solid #dc2626;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .alert-card h3 {
+                color: #dc2626;
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .alert-card p {
+                font-size: 1.125rem;
+                color: #374151;
+            }
+
+            .stat-highlight {
+                background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 100%);
+                color: white;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                text-align: center;
+            }
+
+            .stat-highlight .number {
+                font-size: 3rem;
+                font-weight: 800;
+                margin-bottom: 0.5rem;
+            }
+
+            .problem-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                display: block;
+            }
+
+            .impact-section {
+                background: #f9fafb;
+                padding: 4rem 0;
+            }
+
+            .data-insights {
+                background: #f0f9ff;
+                padding: 2rem;
+                border-radius: 0.5rem;
+                border-left: 4px solid #1e3a8a;
+            }
+
+            .data-insights h4 {
+                color: #1e3a8a;
+                margin-bottom: 1rem;
+            }
+
+            .progress-bar {
+                background: #e5e7eb;
+                height: 20px;
+                border-radius: 10px;
+                margin: 1rem 0;
+                overflow: hidden;
+            }
+
+            .progress-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.5s ease;
+            }
+
+            .regions-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin: 2rem 0;
+            }
+
+            .region-card {
+                background: white;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                border: 2px solid #e5e7eb;
+                text-align: center;
+            }
+
+            .region-card.high-risk {
+                border-color: #dc2626;
+                background: #fef2f2;
+            }
+
+            .region-number {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #1e3a8a;
+            }
+
+            .region-card.high-risk .region-number {
+                color: #dc2626;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .hero-section h1 {
+                    font-size: 2rem;
+                }
+
+                .section h2 {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="logo">insurecheck</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li>
+                        <a href="problem.html" style="color: #1e3a8a"
+                            >Problem</a
+                        >
+                    </li>
+                    <li><a href="solution.html">Solution</a></li>
+                    <li><a href="data.html">Data Insights</a></li>
+                    <li><a href="model.html">Our Model</a></li>
+                    <li><a href="check.html">Check Risk</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="check.html" class="cta-button">Get A Quote</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>The Under-Insurance Crisis</h1>
+                <p>
+                    A significant portion of the population remains
+                    underinsured, exposing them to serious financial risks that
+                    can devastate families and undermine community economic
+                    resilience.
+                </p>
+            </div>
+        </section>
+
+        <!-- Critical Challenge Section -->
+        <section class="section">
+            <div class="container">
+                <div class="alert-card">
+                    <h3>⚠️ Critical Community Challenge</h3>
+                    <p>
+                        Unexpected car accidents can have devastating financial
+                        consequences, especially for individuals whose
+                        livelihoods depend on their vehicles. This isn't just an
+                        individual problem—it's a community-wide issue that
+                        undermines overall economic resilience and social
+                        stability.
+                    </p>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="stat-highlight">
+                        <div class="number">87.7%</div>
+                        <div>Uninterested in Insurance</div>
+                        <small>Based on our 381K+ customer dataset</small>
+                    </div>
+                    <div class="stat-highlight">
+                        <div class="number">4.0%</div>
+                        <div>Lowest Regional Interest</div>
+                        <small>Some regions critically underserved</small>
+                    </div>
+                    <div class="stat-highlight">
+                        <div class="number">300%</div>
+                        <div>Higher Interest After Damage</div>
+                        <small>Experience drives awareness</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Areas Section -->
+        <section class="section" style="background: #f9fafb">
+            <div class="container">
+                <h2>Key Problem Areas</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <span class="problem-icon">💸</span>
+                        <h3>Financial Vulnerability</h3>
+                        <p>
+                            Without insurance, a single accident can push
+                            families into poverty. Vehicles are often people's
+                            most valuable assets, making their loss financially
+                            catastrophic. Emergency repair costs can exceed
+                            monthly income.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <span class="problem-icon">🚫</span>
+                        <h3>Economic Disruption</h3>
+                        <p>
+                            Many individuals depend on vehicles for employment
+                            or operating small businesses. Lack of insurance
+                            protection threatens employment stability and
+                            economic participation in the community.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <span class="problem-icon">🌍</span>
+                        <h3>Community-Wide Impact</h3>
+                        <p>
+                            Under-insurance creates a ripple effect throughout
+                            communities, reducing overall economic resilience
+                            and social stability. It affects not just
+                            individuals, but entire neighborhoods and local
+                            economies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data-Driven Insights Section -->
+        <section class="section">
+            <div class="container">
+                <h2>Our Research Findings</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="data-insights">
+                            <h4>📊 Age Demographics Analysis</h4>
+                            <p><strong>Peak Risk Groups:</strong></p>
+
+                            <div style="margin: 1rem 0">
+                                <div
+                                    style="
+                                        display: flex;
+                                        justify-content: space-between;
+                                        margin-bottom: 0.5rem;
+                                    "
+                                >
+                                    <span>20-30 years</span>
+                                    <span style="color: #dc2626"
+                                        ><strong><15% Interest</strong></span
+                                    >
+                                </div>
+                                <div class="progress-bar">
+                                    <div
+                                        class="progress-fill"
+                                        style="width: 15%; background: #dc2626"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <div style="margin: 1rem 0">
+                                <div
+                                    style="
+                                        display: flex;
+                                        justify-content: space-between;
+                                        margin-bottom: 0.5rem;
+                                    "
+                                >
+                                    <span>31-40 years</span>
+                                    <span style="color: #10b981"
+                                        ><strong>>30% Interest</strong></span
+                                    >
+                                </div>
+                                <div class="progress-bar">
+                                    <div
+                                        class="progress-fill"
+                                        style="width: 35%; background: #10b981"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <div style="margin: 1rem 0">
+                                <div
+                                    style="
+                                        display: flex;
+                                        justify-content: space-between;
+                                        margin-bottom: 0.5rem;
+                                    "
+                                >
+                                    <span>41-50 years</span>
+                                    <span style="color: #10b981"
+                                        ><strong>>30% Interest</strong></span
+                                    >
+                                </div>
+                                <div class="progress-bar">
+                                    <div
+                                        class="progress-fill"
+                                        style="width: 32%; background: #10b981"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <p style="margin-top: 1rem; color: #dc2626">
+                                <strong>Critical Gap:</strong> Young adults
+                                (20-30) show significantly lower insurance
+                                interest despite high vehicle dependency.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="data-insights">
+                            <h4>🚗 Vehicle Damage Impact</h4>
+                            <p><strong>Experience Drives Awareness:</strong></p>
+
+                            <div style="margin: 1rem 0">
+                                <div
+                                    style="
+                                        display: flex;
+                                        justify-content: space-between;
+                                        margin-bottom: 0.5rem;
+                                    "
+                                >
+                                    <span>No Previous Damage</span>
+                                    <span style="color: #dc2626"
+                                        ><strong>~2% Interest</strong></span
+                                    >
+                                </div>
+                                <div class="progress-bar">
+                                    <div
+                                        class="progress-fill"
+                                        style="width: 2%; background: #dc2626"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <div style="margin: 1rem 0">
+                                <div
+                                    style="
+                                        display: flex;
+                                        justify-content: space-between;
+                                        margin-bottom: 0.5rem;
+                                    "
+                                >
+                                    <span>With Damage</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

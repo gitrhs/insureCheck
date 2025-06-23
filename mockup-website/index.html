@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>InsureCheck - Reduce Risk and Keep Life Good</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                line-height: 1.6;
+                color: #6b7280;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* Header */
+            header {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                background: #ffffff;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                padding: 1rem 0;
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #1e3a8a;
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #6b7280;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #1e3a8a;
+            }
+
+            .cta-button {
+                background: #1e3a8a;
+                color: #ffffff;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .cta-button:hover {
+                background: #1e40af;
+            }
+
+            /* Hero Section */
+            .hero {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                align-items: center;
+                min-height: 100vh;
+                padding-top: 5rem;
+                background: linear-gradient(
+                    135deg,
+                    rgba(16, 185, 129, 0.05) 0%,
+                    rgba(34, 211, 238, 0.05) 100%
+                );
+            }
+
+            .hero-content h1 {
+                font-size: 4rem;
+                font-weight: 800;
+                color: #1e3a8a;
+                margin-bottom: 1.5rem;
+                line-height: 1.1;
+            }
+
+            .hero-content .highlight {
+                color: #10b981;
+            }
+
+            .hero-content p {
+                font-size: 1.125rem;
+                margin-bottom: 2rem;
+                color: #6b7280;
+            }
+
+            .hero-buttons {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .btn-primary {
+                background: #1e3a8a;
+                color: #ffffff;
+                padding: 1rem 2rem;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.3s;
+            }
+
+            .btn-primary:hover {
+                background: #1e40af;
+            }
+
+            .btn-secondary {
+                color: #10b981;
+                text-decoration: none;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .hero-image {
+                position: relative;
+                background: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
+                border-radius: 1rem;
+                padding: 3rem;
+                min-height: 500px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-align: center;
+            }
+
+            .hero-badge {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: #10b981;
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 600;
+            }
+
+            .hero-image-content {
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+
+            /* Partner Logos */
+            .partners {
+                background: #f9fafb;
+                padding: 3rem 0;
+            }
+
+            .partners h3 {
+                text-align: center;
+                color: #6b7280;
+                margin-bottom: 2rem;
+            }
+
+            .partner-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 2rem;
+                align-items: center;
+            }
+
+            .partner-logo {
+                background: #ffffff;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                text-align: center;
+                color: #9ca3af;
+                font-weight: 600;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Stats Section */
+            .stats {
+                padding: 4rem 0;
+                background: #1e3a8a;
+                color: white;
+            }
+
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .stat-item h3 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: #22d3ee;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-item p {
+                font-size: 1.125rem;
+                color: #d1d5db;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .hero {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+                }
+
+                .hero-content h1 {
+                    font-size: 2.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav class="container">
+                <div class="logo">insurecheck</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="problem.html">Problem</a></li>
+                    <li><a href="solution.html">Solution</a></li>
+                    <li><a href="data.html">Data Insights</a></li>
+                    <li><a href="model.html">Our Model</a></li>
+                    <li><a href="check.html">Check Risk</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="check.html" class="cta-button">Get A Quote</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero container">
+            <div class="hero-content">
+                <h1>
+                    Reduce risk and keep
+                    <span class="highlight">life good</span>
+                </h1>
+                <p>
+                    Our AI-powered platform helps identify customers who need
+                    vehicle insurance the most. Protect your assets, secure your
+                    future, and keep your family safe with our data-driven
+                    insurance solutions.
+                </p>
+                <div class="hero-buttons">
+                    <a href="check.html" class="btn-primary">Check Your Risk</a>
+                    <a href="about.html" class="btn-secondary">Learn More →</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-badge">Best of Service</div>
+                <div class="hero-image-content">
+                    🛡️<br />
+                    Smart Insurance<br />
+                    Protection Platform<br />
+                    <small style="font-size: 1rem; opacity: 0.8"
+                        >Powered by AI & Machine Learning</small
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- Partner Logos -->
+        <section class="partners">
+            <div class="container">
+                <h3>Trusted by Leading Insurance Partners</h3>
+                <div class="partner-grid">
+                    <div class="partner-logo">Canal</div>
+                    <div class="partner-logo">Encompass</div>
+                    <div class="partner-logo">AtlantaLife</div>
+                    <div class="partner-logo">CGN</div>
+                    <div class="partner-logo">Selective</div>
+                    <div class="partner-logo">State Auto</div>
+                    <div class="partner-logo">Seaview</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>381K+</h3>
+                        <p>Customers Analyzed</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>91%</h3>
+                        <p>Accuracy Rate</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>86%</h3>
+                        <p>Model Performance</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>40%</h3>
+                        <p>Cost Reduction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
