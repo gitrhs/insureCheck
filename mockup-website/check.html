@@ -106,6 +106,56 @@
                 font-size: 1.1rem;
             }
 
+            /* Demo Buttons Styling */
+            .demo-buttons {
+                margin-bottom: 2rem;
+                padding: 1rem;
+                background: #f8fafc;
+                border-radius: 0.5rem;
+                border: 2px dashed #cbd5e1;
+            }
+
+            .demo-buttons h3 {
+                color: #1e3a8a;
+                margin-bottom: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .demo-buttons p {
+                font-size: 0.9rem;
+                color: #64748b;
+                margin-bottom: 1rem;
+            }
+
+            .demo-btn-group {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .demo-btn {
+                background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s;
+                flex: 1;
+                min-width: 140px;
+            }
+
+            .demo-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            }
+
+            .demo-btn:active {
+                transform: translateY(0);
+            }
+
             .form-group {
                 margin-bottom: 1.5rem;
             }
@@ -319,6 +369,14 @@
                 .form-section h1 {
                     font-size: 2rem;
                 }
+
+                .demo-btn-group {
+                    flex-direction: column;
+                }
+
+                .demo-btn {
+                    min-width: auto;
+                }
             }
         </style>
     </head>
@@ -355,6 +413,28 @@
                         your likelihood of needing vehicle insurance based on
                         data from over 381,000 customers.
                     </p>
+
+                    <!-- Demo Buttons -->
+                    <div class="demo-buttons">
+                        <h3>🚀 Quick Demo Examples</h3>
+                        <p>
+                            Try these sample profiles to see how our AI works:
+                        </p>
+                        <div class="demo-btn-group">
+                            <button
+                                class="demo-btn"
+                                onclick="fillYoungProfessional()"
+                            >
+                                👨‍💼 Young Professional
+                            </button>
+                            <button
+                                class="demo-btn"
+                                onclick="fillFamilyPerson()"
+                            >
+                                👩‍👧‍👦 Family Person
+                            </button>
+                        </div>
+                    </div>
 
                     <form id="riskForm">
                         <div class="form-group">
@@ -648,6 +728,34 @@
             // Configuration
             const API_BASE_URL = "http://localhost:5410";
 
+            // Demo data profiles
+            const demoProfiles = {
+                young_professional: {
+                    Age: 25,
+                    Gender: "Male",
+                    Driving_License: 1,
+                    Region_Code: 28,
+                    Previously_Insured: 0,
+                    Vehicle_Age: "< 1 Year",
+                    Vehicle_Damage: "No",
+                    Annual_Premium: 25000,
+                    Policy_Sales_Channel: 152,
+                    Vintage: 30,
+                },
+                family_person: {
+                    Age: 40,
+                    Gender: "Female",
+                    Driving_License: 1,
+                    Region_Code: 8,
+                    Previously_Insured: 0,
+                    Vehicle_Age: "1-2 Year",
+                    Vehicle_Damage: "Yes",
+                    Annual_Premium: 35000,
+                    Policy_Sales_Channel: 26,
+                    Vintage: 180,
+                },
+            };
+
             // DOM elements
             const form = document.getElementById("riskForm");
             const submitBtn = document.getElementById("submitBtn");
@@ -660,6 +768,63 @@
             const riskLabel = document.getElementById("riskLabel");
             const recommendationText =
                 document.getElementById("recommendationText");
+
+            // Demo button functions
+            function fillYoungProfessional() {
+                fillForm(demoProfiles.young_professional);
+                // Scroll to form for better UX
+                document.getElementById("riskForm").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+
+            function fillFamilyPerson() {
+                fillForm(demoProfiles.family_person);
+                // Scroll to form for better UX
+                document.getElementById("riskForm").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+
+            function fillForm(profileData) {
+                // Fill all form fields with demo data
+                document.getElementById("age").value = profileData.Age;
+                document.getElementById("gender").value = profileData.Gender;
+                document.getElementById("drivingLicense").value =
+                    profileData.Driving_License;
+                document.getElementById("region").value =
+                    profileData.Region_Code;
+                document.getElementById("previousInsurance").value =
+                    profileData.Previously_Insured;
+                document.getElementById("vehicleAge").value =
+                    profileData.Vehicle_Age;
+                document.getElementById("vehicleDamage").value =
+                    profileData.Vehicle_Damage;
+                document.getElementById("annualPremium").value =
+                    profileData.Annual_Premium;
+                document.getElementById("salesChannel").value =
+                    profileData.Policy_Sales_Channel;
+                document.getElementById("vintage").value = profileData.Vintage;
+
+                // Reset any previous results
+                initialInfo.style.display = "block";
+                riskResult.classList.add("result-hidden");
+                hideError();
+
+                // Add visual feedback
+                const submitButton = document.getElementById("submitBtn");
+                submitButton.style.background =
+                    "linear-gradient(135deg, #10b981 0%, #059669 100%)";
+                submitButton.textContent = "🔍 Analyze This Profile";
+
+                setTimeout(() => {
+                    submitButton.style.background =
+                        "linear-gradient(135deg, #1e3a8a 0%, #10b981 100%)";
+                    submitButton.textContent = "🔍 Check My Risk Level";
+                }, 2000);
+            }
 
             // Utility functions
             function showLoading() {
